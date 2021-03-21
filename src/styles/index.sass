@@ -40,7 +40,28 @@
 .def-img
   background-repeat: no-repeat
   background-position: center
-  background-size: cover
+  background-size: contain
+
+.inherit-all
+  font-family: inherit
+  font-weight: inherit
+  font-size: inherit
+  color: inherit
+
+
+// COLORS
+$dark: black
+$light: white
+$grey: #212121
+$main: #FFEFB7
+$red: #BC5151
+
+$menu-transition: .2s
+$border: 1px solid $dark
+
+@function rem($px)
+  @return calc(#{$px} / 16 * 1rem)
+
 
 .button
   padding: 0
@@ -48,28 +69,80 @@
   outline: none
   border: none
   background-color: rgba(0, 0, 0, 0)
+  &--main
+    background-color: $grey
+    box-shadow: 2px 2px 0px $light
+    padding: rem(5) rem(12) rem(8)
+    border-radius: rem(6)
+    font-size: rem(18)
+    transition: box-shadow $menu-transition
+    &:hover
+      box-shadow: 1px 1px 0px $light
+    &:active
+      box-shadow: 0px 0px 0px $light
+      
+      
 
-@function rem($px)
-  @return calc(#{$px} / 16 * 1rem)
 
-
-// COLORS
-$dark: black
-$light: white
-$main: #FFEFB7
-
-$menu-transition: .2s
-$border: 1px solid $dark
+.FormattedMessage
+  display: inline
+  @extend .inherit-all
 
 
 
 *
-  font-family: 'Formular', sans-serif
+  font-family: 'RF Dewi Extended', sans-serif
   color: $dark
   margin: 0
   padding: 0
   box-sizing: border-box
   -webkit-font-smoothing: antialiased
+
+
+
+.grain
+  position: fixed
+  top: 0
+  left: 0
+  width: 100%
+  height: 100%
+  overflow: hidden
+  pointer-events: none
+  z-index: 100
+  &::after
+    pointer-events: none
+    content: ''
+    background-image: url(https://sun9-21.userapi.com/c855236/v855236973/21ef90/A4K_iEg4g6Q.jpg)
+    height: 300%
+    width: 300%
+    opacity: 0.1
+    position: absolute
+    top: -50%
+    left: -50%
+    animation: grain 8s steps(4) infinite
+    @keyframes grain
+      0%, 100%
+        transform: translate(0, 0)
+      10%
+        transform: translate(-.5%, -1.0%)
+      20%
+        transform: translate(-1.5%, .5%)
+      30%
+        transform: translate(.7%, -2.5%)
+      40%
+        transform: translate(-.5%, 2.5%)
+      50%
+        transform: translate(-1.5%, 2.0%)
+      60%
+        transform: translate(1.5%, 0%)
+      70%
+        transform: translate(0%, 1.5%)
+      80%
+        transform: translate(3%, 3.5%)
+      90%
+        transform: translate(-1.0%, 1.0%)
+
+
 
 .App
   overflow: hidden
@@ -82,3 +155,109 @@ $border: 1px solid $dark
 .Header
   width: 100%
   height: rem(112)
+
+
+
+.Home
+  width: 100vw
+  height: 100vh
+  @extend .d-flex
+  @extend .flex-column
+  @extend .flex-xl-row
+  padding: rem(17) rem(20)
+  @include media-breakpoint-down(sm)
+    padding: rem(17) rem(20)
+  background-color: $grey
+  transition: background-color $menu-transition
+  *
+    font-weight: 900
+  &--opened
+    background-color: $dark
+  &__red
+    @extend .order-2
+    @extend .order-xl-1
+    background-color: $red
+    position: relative
+    border-radius: rem(15)
+    overflow: hidden
+    @extend .flex-grow-1
+    @include media-breakpoint-down(sm)
+      border-radius: rem(30)
+    @include media-breakpoint-down(xs)
+      border-radius: rem(15)
+    &__button
+      @extend .button
+      @extend .button--main
+      position: absolute
+      top: rem(30)
+      right: rem(30)
+    &__guy,
+    &__hi,
+    &__desc
+      position: absolute
+      left: 50%
+    &__guy,
+    &__hi
+      @extend .def-img
+    &__guy
+      width: 30vw
+      bottom: 35%
+      background-image: url(./img/guy.svg)
+      padding-top: 168%
+      @include media-breakpoint-down(lg)
+        background-image: url(./img/guy-mobile.svg)
+        width: 40vw
+        padding-top: 213.1%
+      @include media-breakpoint-down(md)
+        bottom: 50%
+    &__hi
+      bottom: 35%
+      width: 60vw
+      background-image: url(./img/hi.svg)
+      padding-top: 33.95%
+      @include media-breakpoint-down(lg)
+        background-image: url(./img/hi-tablet.svg)
+        width: 60vw
+        padding-top: 33%
+      @include media-breakpoint-down(md)
+        background-image: url(./img/hi-mobile.svg)
+        padding-top: 31.6%
+        bottom: 45%
+    &__desc
+      bottom: 15%
+  &__long-long-desc
+    overflow: hidden
+    @extend .order-1
+    @extend .order-xl-2
+    @include media-breakpoint-up(lg)
+      transition: width $menu-transition
+      width: 0
+      height: 100%
+    @include media-breakpoint-down(lg)
+      transition: height $menu-transition
+      width: 100%
+      height: 0
+    .Home--opened &
+      @include media-breakpoint-up(lg)
+        width: 25vw
+      @include media-breakpoint-down(lg)
+        height: 30vh
+      @include media-breakpoint-down(md)
+        height: 35vh
+    &__container
+      color: $light
+      @include media-breakpoint-up(lg)
+        font-size: rem(15)
+        padding: 35% rem(40)
+        width: 25vw
+      @include media-breakpoint-down(lg)
+        font-size: rem(15)
+        padding: rem(90) rem(60)
+        height: 30vh
+      @include media-breakpoint-down(md)
+        font-size: rem(12)
+        padding: rem(45) rem(40)
+        height: 35vh
+      @include media-breakpoint-down(sm)
+        font-size: rem(10)
+        padding: rem(33) rem(23)

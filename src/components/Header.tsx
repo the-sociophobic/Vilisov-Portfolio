@@ -1,50 +1,55 @@
 import React from 'react'
-import { NavLink } from "react-router-dom"
 
-import routes from '../utils/routes'
-// import logo from '../styles/img/logo.svg'
+import { withRouter } from 'react-router-dom'
+import { RouteComponentProps } from 'react-router'
 
+import Link from "./Link"
+import { Context } from './Store'
+import FormattedMessage from './FormattedMessage'
+
+
+type PathParamsType = {
+  param1: string,
+}
+
+type Props = RouteComponentProps<PathParamsType> & {}
 
 type State = {
   opened: boolean;
+  linksOpened: boolean;
 }
 
-class Header extends React.Component<{}, State> {
-  constructor(props: {}) {
-    super(props)
 
-    this.state = {
-      opened: false
-    }
+class Header extends React.Component<Props, State> {
+  state = {
+    opened: false,
+    linksOpened: false,
   }
 
+  static contextType = Context
+
   render = () =>
-    <header className="Header">
-      {/* <img
-        className="Header__logo"
-        src={logo}
-      /> */}
-      <div
-        className="Header__burger"
-        onClick={() => this.setState({
-          opened: !this.state.opened
-        })}
-      />
-      <div className={`Header__links ${this.state.opened && "Header__links--opened"}`}>
-        {routes.map(route =>
-          <NavLink
-            exact={route.link === "/"}
-            to={route.link}
-            className="Link"
-            activeClassName="Link--active"
-            onClick={() => this.setState({ opened: false })}
-          >
-            {route.label}
-          </NavLink>
-        )}
+    <header className={`Header ${this.state.opened && "Header--opened"}`}>
+
+      <div className="Header__content">
+        <div className="Header__content__buttons">
+          
+          <div
+            className="Header__content__buttons__links"
+            onClick={() => this.setState({ linksOpened: !this.state.linksOpened })}
+          />
+          {/* <div className="Header__content__buttons__locale">
+            <FormattedMessage id="Header.buttons.locale" />
+          </div> */}
+          <div
+            className="Header__content__buttons__open"
+            onClick={() => this.setState({ opened: !this.state.opened })}
+          />
+        </div>
       </div>
+      
     </header>
 }
 
 
-export default Header
+export default withRouter(Header)
