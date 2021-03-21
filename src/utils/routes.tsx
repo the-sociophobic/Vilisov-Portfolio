@@ -4,6 +4,7 @@ import Home from '../pages/Home'
 import Labs from '../pages/Labs'
 import Performances from '../pages/Performances'
 import Book from '../pages/Book'
+import Podcast from '../pages/Podcast'
 import Perfolectures from '../pages/Perfolectures'
 import Videoessays from '../pages/Videoessays'
 
@@ -12,6 +13,7 @@ type Route = {
   to: string
   Comp: any
   exact?: boolean
+  id?: string
 }
 
 
@@ -31,6 +33,10 @@ const routes: Route[] = [
   {
     to: "/book",
     Comp: <Book />
+  },
+  {
+    to: "/podcast",
+    Comp: <Podcast />
   },
   {
     to: "/perfolectures",

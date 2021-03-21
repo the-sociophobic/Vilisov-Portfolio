@@ -1,7 +1,6 @@
 import React from "react"
 
 import Emoji from "../components/Emoji"
-import Header from '../components/Header'
 import FormattedMessage from "../components/FormattedMessage"
 import isTouchDevice from "../utils/isTouchDevice"
 
@@ -40,7 +39,6 @@ class Home extends React.Component<{}, State> {
     <div className={`Home ${this.state.opened && 'Home--opened'}`}>
 
       <div className="Home__red">
-        <Header />
         <div
           className="Home__red__guy"
           style={{
