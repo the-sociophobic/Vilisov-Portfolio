@@ -26,7 +26,7 @@ type State = {
 
 class Header extends React.Component<Props, State> {
   state = {
-    opened: false,
+    opened: true,
     linksOpened: false,
   }
 
@@ -34,7 +34,7 @@ class Header extends React.Component<Props, State> {
 
   closeAll = () =>
     this.setState({
-      opened: false,
+      // opened: false,
       linksOpened: false
     })
 
@@ -54,10 +54,10 @@ class Header extends React.Component<Props, State> {
         {/* <div className="Header__buttons__locale">
           <FormattedMessage id="Header.buttons.locale" />
         </div> */}
-        <div
+        {/* <div
           className="Header__buttons__open"
           onClick={() => this.setState({ opened: !this.state.opened })}
-        />
+        /> */}
       </div>
 
       {this.state.linksOpened &&

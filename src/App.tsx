@@ -5,7 +5,6 @@ import {
   Route,
 } from "react-router-dom"
 
-import Header from './components/Header'
 import routes from './utils/routes'
 
 import './styles/index.sass'
@@ -15,7 +14,6 @@ class App extends React.Component {
   render = () =>
     <div className="App">
       <Router>
-        <Header />
         <div className="content">
           <Switch>
             {routes.map(route =>

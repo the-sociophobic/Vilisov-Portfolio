@@ -1,6 +1,7 @@
 import React from 'react'
 
-import Home from '../pages/Home'
+import Header from '../components/Header'
+// import Home from '../pages/Home'
 import Labs from '../pages/Labs'
 import Performances from '../pages/Performances'
 import Book from '../pages/Book'
@@ -20,7 +21,7 @@ type Route = {
 const routes: Route[] = [
   {
     to: "/",
-    Comp: <Home />
+    Comp: <Header />
   },
   {
     to: "/labs",
