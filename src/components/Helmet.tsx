@@ -24,7 +24,7 @@ class Helmet extends React.Component<Props, {}> {
       <title>
         {
         (getMessage(this, 'Vilisov')
-          + (this.props.location.pathname.length > 2 ? ` / ${getMessage(this, `${camelize(this.props.location.pathname.replace('/', ''))}.name`)}`
+          + (this.props.location.pathname.length > 2 ? ` / ${getMessage(this, `pages.${camelize(this.props.location.pathname.replace('/', ''))}.name`)}`
           :
           ''))
         .toLocaleLowerCase()

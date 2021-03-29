@@ -31,7 +31,7 @@ class Frame extends React.Component<Props, {}> {
       {this.props.location.pathname === '/' ?
         <Img className='Frame__navigation__Img' src={VilisovImg} />
         :
-        <FormattedMessage id={`${camelize(this.props.location.pathname.replace('/', ''))}.name`} />}
+        <FormattedMessage id={`pages.${camelize(this.props.location.pathname.replace('/', ''))}.name`} />}
     </div>
   </div>
 }

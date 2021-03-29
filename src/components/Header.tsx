@@ -110,7 +110,7 @@ class Header extends React.Component<Props, State> {
                   to={route.to}
                   className='Header__content__routes__item'
                 >
-                  <FormattedMessage id={`${route.id || camelize(route.to.replace('/', ''))}.name`} />
+                  <FormattedMessage id={`pages.${route.id || camelize(route.to.replace('/', ''))}.name`} />
                 </Link>
             )}
             <div className='Header__content__routes__buttons'>

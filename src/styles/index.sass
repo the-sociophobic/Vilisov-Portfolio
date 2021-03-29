@@ -449,3 +449,61 @@ $border: 1px solid $dark
     opacity: 0
   &__img
     width: 100%
+
+
+
+
+
+
+
+
+
+.Layout
+  @extend .d-flex
+  @extend .flex-column
+  @extend .flex-lg-row
+  @extend .align-items-center
+  @extend .justify-content-around
+  width: 100%
+  height: 100%
+  &__preview,
+  &__links
+    width: 40%
+    height: 100%
+    @include media-breakpoint-down(md)
+      width: 90%
+      height: 50%
+  &__preview
+    @extend .order-lg-1
+    padding-top: rem(180)
+    padding-bottom: rem(50)
+    &__text
+      color: $light
+      font-size: rem(13)
+      line-height: 1.4
+      @include media-breakpoint-down(md)
+        width: 70%
+    &__Img
+      width: 100%
+  &__links
+    @extend .order-lg-2
+    overflow-y: scroll
+    padding-top: rem(80)
+    padding-bottom: rem(80)
+    &__item
+      font-family: 'RF Dewi Extended', sans-serif
+      font-weight: 900
+      cursor: pointer
+      color: $light
+      font-size: rem(45)
+      margin-bottom: rem(45)
+      @include media-breakpoint-down(md)
+        font-size: rem(36)
+      @include media-breakpoint-down(xs)
+        font-size: rem(20)
+      &:hover,
+      &--active
+        color: $dark !important
+        *
+          color: $dark !important
+        text-shadow: -1px -1px 0 $light, 1px -1px 0 $light, -1px 1px 0 $light, 1px 1px 0 $light
