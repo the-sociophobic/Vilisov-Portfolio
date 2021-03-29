@@ -17,14 +17,24 @@ type objWithContextType = {
 const getMessage = (
   _this: objWithContextType,
   id: string,
-): string =>
-    messages[_this.context.locale][id] || "#no message found#"
+  onlyString?: boolean
+): string | JSX.Element => {
+  const res = messages[_this.context.locale][id] || "#no message found#"
+
+  if (onlyString)
+    return typeof res === 'string' ? res : '#not string#'
+  return res
+}
+    
 
 const getMessageAllLocales = (
   _this: objWithContextType,
   id: string,
-): string[] =>
-    [messages["rus"][id] || "#no message found#", messages["eng"][id] || "#no message found#"]
+): (string | JSX.Element)[] =>
+    [
+      messages["rus"][id] || "#no message found#",
+      messages["eng"][id] || "#no message found#"
+    ]
 
 
 export {

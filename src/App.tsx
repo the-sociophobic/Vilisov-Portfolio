@@ -5,6 +5,7 @@ import {
   Route,
 } from "react-router-dom"
 
+import Helmet from './components/Helmet'
 import routes from './utils/routes'
 
 import './styles/index.sass'
@@ -14,6 +15,7 @@ class App extends React.Component {
   render = () =>
     <div className="App">
       <Router>
+        <Helmet />
         <div className="content">
           <Switch>
             {routes.map(route =>

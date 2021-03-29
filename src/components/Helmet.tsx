@@ -22,9 +22,13 @@ class Helmet extends React.Component<Props, {}> {
   render = () =>
     <Helmet_>
       <title>
-        {getMessage(this, 'Vilisov')
-          + (this.props.location.pathname.length > 1 && ' / ')
-          + getMessage(this, `${camelize(this.props.location.pathname.replace('/', ''))}.name`)}
+        {
+        (getMessage(this, 'Vilisov')
+          + (this.props.location.pathname.length > 2 ? ` / ${getMessage(this, `${camelize(this.props.location.pathname.replace('/', ''))}.name`)}`
+          :
+          ''))
+        .toLocaleLowerCase()
+        }
       </title>
     </Helmet_>
 }

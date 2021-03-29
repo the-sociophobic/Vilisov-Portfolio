@@ -1,5 +1,7 @@
-const addNewLines = (string: string) =>
-  string.includes('\n') ?
+const addNewLines = (string: string | JSX.Element) =>
+  typeof string !== 'string' || !string.includes('\n') ?
+    string
+    :
     string
       .split('\n')
       .map((paragraph, index) =>
@@ -9,8 +11,6 @@ const addNewLines = (string: string) =>
         >
           {paragraph}
         </div>)
-    :
-    string
 
 
 export default addNewLines

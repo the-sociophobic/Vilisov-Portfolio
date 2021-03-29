@@ -3,7 +3,7 @@ import _ from 'lodash'
 
 interface messagesType {
   [key: string]: {
-    [key: string]: string | undefined
+    [key: string]: string | JSX.Element | undefined
   }
 }
 

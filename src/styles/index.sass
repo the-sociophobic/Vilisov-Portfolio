@@ -235,36 +235,32 @@ $border: 1px solid $dark
       width: 100vw
       height: 100vh
     &__long-desc
-      position: absolute
-      top: rem(120)
-      right: rem(70)
-      width: rem(60)
+      width: calc(780 / 1440 * 100%)
+      margin-left: calc(538 / 1440 * 100%)
+      margin-top: rem(120)
+      margin-bottom: rem(139)
       font-size: rem(36)
-      @include media-breakpoint-down(xl)
-        top: rem(170)
-        right: 10%
-        width: 80%
+      @include media-breakpoint-down(md)
+        padding-top: rem(197)
+        margin-bottom: rem(320)
         font-size: rem(30)
       @include media-breakpoint-down(xs)
         top: rem(100)
         font-size: rem(15)
     &__routes
-      position: absolute
-      width: 70%
-      left: rem(120)
-      bottom: rem(210)
-      @include media-breakpoint-down(xl)
-        width: 70%
-        left: 10%
-        bottom: 5%
+      width: calc(848 / 1440 * 100%)
+      margin-left: rem(100)
+      margin-bottom: rem(12)
       @include media-breakpoint-down(md)
-        width: 85%
-        left: 5%
+        width: calc(487 / 834 * 100%)
+        left: rem(85 / 834 * 100%)
       &__item.Link
-        display: inline-block
+        display: inline
         margin-right: rem(30)
         line-height: 3
         font-size: rem(20)
+        *
+          text-decoration: none
         @include media-breakpoint-down(xl)
           line-height: 2.5
           font-size: rem(16)
@@ -398,14 +394,14 @@ $border: 1px solid $dark
   @include media-breakpoint-down(sm)
     padding: rem(9) rem(7)
   &__content
-    position: relative
-    background-color: $dark
     *
       color: $light
     @extend .flex-grow-1
+    position: relative
     width: 100%
+    overflow-y: scroll
+    background-color: $dark
     border-radius: rem(15)
-    overflow: hidden    
   &__navigation
     width: 100%
     height: rem(82)
