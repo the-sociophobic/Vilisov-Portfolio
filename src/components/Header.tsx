@@ -114,9 +114,12 @@ class Header extends React.Component<Props, State> {
                 </Link>
             )}
             <div className='Header__content__routes__buttons'>
-              <button className={'Header__content__routes__buttons'}>
-                <FormattedMessage id='whatAmIButton' />
+              {/* <button className={'Header__content__routes__buttons'}>
+                <FormattedMessage id='Header.whatAmIButton' />
               </button>
+              <button className={'Header__content__routes__buttons'}>
+                <FormattedMessage id='Header.helpButton' />
+              </button> */}
             </div>
           </div>
         </Frame>       
