@@ -9,7 +9,10 @@ class Performances extends React.Component<{}, {}> {
   render = () =>
     <div className='Performances'>
       <Frame>
-        <Layout {...defaultMessages.pages.Performances} />
+        <Layout
+          url='/performances'
+          items={defaultMessages.pages.Performances}
+        />
       </Frame>
     </div>
 }

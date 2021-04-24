@@ -1,13 +1,27 @@
 import React from "react"
 
+import {
+  NavLink,
+  withRouter
+} from 'react-router-dom'
+import { RouteComponentProps } from 'react-router'
+import camelize from '../utils/camelize'
+
 
 import FormattedMessage from "./FormattedMessage"
 import Img from "./Img"
 
 
-interface Props extends Object {
+type PathParamsType = {
+  param1: string,
+}
+
+interface MyProps extends Object {
+  url: string
   [key: string]: any
 }
+
+type Props = RouteComponentProps<PathParamsType> & MyProps
 
 type State = {
   current: string
@@ -17,36 +31,51 @@ type State = {
 class Layout extends React.Component<Props, State> {
 
   state = {
-    current: ''
+    current: this.props.location.pathname.replace(this.props.url, '').replace('/', '')
   }
+
+  componentDidUpdate = (prevProps: { location: Object }) =>
+    this.props.location !== prevProps.location &&
+      this.setState({
+        current: this.props.location.pathname.replace(this.props.url, '').replace('/', '')
+      })
+
+  renderCurrent = () =>
+    this.state.current !== '' &&
+      <>
+        <div className='Layout__preview__text'>
+          <FormattedMessage message={this.props.items[this.state.current]?.text} />
+        </div>
+        <Img
+          className='Layout__preview__Img'
+          src={this.props[this.state.current]?.src[0]}
+        />
+      </>
 
   render = () =>
     <div className='Layout'>
       <div className='Layout__links'>
-        {Object.keys(this.props)
+        {Object.keys(this.props.items)
           .map(key =>
-            <div
+            <NavLink
               key={key}
-              className={`Layout__links__item ${this.state.current === key && 'Layout__links__item--active'}`}
-              onClick={() => this.setState({ current: key })}
+              to={`${this.props.url}/${key}`}
+              className='Layout__links__item'
+              activeClassName='Layout__links__item--active'
             >
-              <FormattedMessage message={this.props[key].name} />
-            </div>
+              <FormattedMessage message={this.props.items[key].name} />
+            </NavLink>
         )}
       </div>
       <div className='Layout__preview'>
-        {this.state.current !== '' &&
-          <div className='Layout__preview__text'>
-            <FormattedMessage message={this.props[this.state.current].text} />
-          </div>}
-        {this.state.current !== '' &&
-          <Img
-            className='Layout__preview__Img'
-            src={this.props[this.state.current].src[0]}
-          />}
+          {this.state.current !== '' ?
+          this.renderCurrent()
+          :
+          <FormattedMessage id={`pages.${camelize(this.props.url.replace('/', ''))}.desc`} />
+        }
       </div>
     </div>
 }
 
 
-export default Layout
+export default withRouter(Layout)

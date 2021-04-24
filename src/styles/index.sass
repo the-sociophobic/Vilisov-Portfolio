@@ -30,6 +30,12 @@
   -ms-user-select: none        /* Internet Explorer/Edge */
   user-select: none            /* Non-prefixed version, currently supported by Chrome and Opera */
 
+.no-scrollbar
+  -ms-overflow-style: none  /* Internet Explorer 10+ */
+  scrollbar-width: none  /* Firefox */
+  &::-webkit-scrollbar 
+    display: none  /* Safari and Chrome */
+
 .abs-cover
   position: absolute
   width: 100%
@@ -487,9 +493,23 @@ $border: 1px solid $dark
       width: 100%
   &__links
     @extend .order-lg-2
+    overflow-x: visible
     overflow-y: scroll
     padding-top: rem(80)
     padding-bottom: rem(80)
+    @extend .no-scrollbar
+    // position: relative
+    &::after
+      content: ''
+      position: absolute
+      z-index: 1000
+      width: 100%
+      height: rem(150)
+      @include media-breakpoint-down(md)
+        height: rem(100)
+      bottom: 0
+      left: 0
+      background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%)
     &__item
       font-family: 'RF Dewi Extended', sans-serif
       font-weight: 900
@@ -497,6 +517,9 @@ $border: 1px solid $dark
       color: $light
       font-size: rem(45)
       margin-bottom: rem(45)
+      display: block
+      &:hover
+        text-decoration: none
       @include media-breakpoint-down(md)
         font-size: rem(36)
       @include media-breakpoint-down(xs)

@@ -9,7 +9,10 @@ class Labs extends React.Component<{}, {}> {
   render = () =>
     <div className='Labs'>
       <Frame>
-        <Layout {...defaultMessages.pages.Labs} />
+        <Layout
+          url='/labs'
+          items={defaultMessages.pages.Labs}
+        />
       </Frame>
     </div>
 }
