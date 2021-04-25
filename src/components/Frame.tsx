@@ -14,32 +14,34 @@ import VilisovImg from '../styles/img/photo.png'
 type PathParamsType = {
   param1: string,
 }
-type Props = RouteComponentProps<PathParamsType> & {}
+type Props = RouteComponentProps<PathParamsType> & {
+  className?: string
+}
 
 
 class Frame extends React.Component<Props, {}> {
   render = () =>
-  <div className='Frame'>
-    <div className='Frame__content'>
-      {this.props.children}
-    </div>
-    <div className="Frame__navigation">
-      <Link to='/'>
-        <FormattedMessage id="Vilisov" />
-      </Link>
-      <div className="Frame__navigation__arrow" />
-      {this.props.location.pathname === '/' ?
-        <Img className='Frame__navigation__Img' src={VilisovImg} />
-        :
-        this.props.location.pathname.split('/').length === 3 ?
-          <Link to={`/${this.props.location.pathname.split('/')[1]}`}>
-            <FormattedMessage id={`pages.${camelize(this.props.location.pathname.split('/')[1])}.name`} />
-          </Link>
+    <div className={`Frame ${this.props.className}`}>
+      <div className='Frame__content'>
+        {this.props.children}
+      </div>
+      <div className="Frame__navigation">
+        <Link to='/'>
+          <FormattedMessage id="Vilisov" />
+        </Link>
+        <div className="Frame__navigation__arrow" />
+        {this.props.location.pathname === '/' ?
+          <Img className='Frame__navigation__Img' src={VilisovImg} />
           :
-          <FormattedMessage id={`pages.${camelize(this.props.location.pathname.split('/')[1])}.name`} />
-      }
+          this.props.location.pathname.split('/').length === 3 ?
+            <Link to={`/${this.props.location.pathname.split('/')[1]}`}>
+              <FormattedMessage id={`pages.${camelize(this.props.location.pathname.split('/')[1])}.name`} />
+            </Link>
+            :
+            <FormattedMessage id={`pages.${camelize(this.props.location.pathname.split('/')[1])}.name`} />
+        }
+      </div>
     </div>
-  </div>
 }
 
 

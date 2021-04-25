@@ -442,6 +442,21 @@ $border: 1px solid $dark
         padding-top: calc(#{rem(18)} * .33)
     .FormattedMessage
       text-transform: lowercase
+  &--Loader
+    position: fixed
+    top: 0
+    left: 0
+    z-index: 2000
+    transition: opacity 1s
+    &--transparent
+      opacity: 0
+    .Loader
+      height: 100%
+      @extend .d-flex
+      @extend .flex-row
+      @extend .align-items-center
+      @extend .justify-content-around
+      
 
 
 

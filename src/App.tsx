@@ -1,36 +1,31 @@
 import React from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom"
+import { BrowserRouter as Router } from "react-router-dom"
 
 import Helmet from './components/Helmet'
-import routes from './utils/routes'
+import {
+  Provider,
+  Context
+} from './components/Store'
+import Routes from './components/Routes'
 
 import './styles/index.sass'
+import Loader from './components/Loader'
 
 
 class App extends React.Component {
+
+  static contextType = Context
+
   render = () =>
-    <div className="App">
-      <Router>
-        <Helmet />
-        <div className="content">
-          <Switch>
-            {routes.map(route =>
-              <Route
-                path={route.to}
-                exact={route.to === "/"}
-              >
-                {route.Comp}
-                
-              </Route>
-            )}
-          </Switch>
-        </div>
-      </Router>
-    </div>
+    <Provider>
+      <div className="App">
+        <Router>
+          <Helmet />
+          <Loader loaded={this?.context?.contentful ? true : false} />
+          <Routes />
+        </Router>
+      </div>
+    </Provider>
 }
 
 

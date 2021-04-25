@@ -7,8 +7,8 @@ import Link from "./Link"
 import Frame from "./Frame"
 import { Context } from './Store'
 import FormattedMessage from './FormattedMessage'
+import { ProjType } from './Store/Types'
 
-import routes from '../utils/routes'
 import camelize from '../utils/camelize'
 
 
@@ -41,6 +41,11 @@ class Header extends React.Component<Props, State> {
   componentDidUpdate = (prevProps: {location: any}) =>
     this.props.location !== prevProps.location &&
       this.closeAll()
+
+  getTypes = () =>
+    this.context?.contentful?.types
+      ?.sort((a: ProjType, b:ProjType) => (a.order || 100) - (b.order || 100))
+    || []
 
   render = () =>
     <header className={`Header ${this.state.opened && "Header--opened"}`}>
@@ -99,18 +104,14 @@ class Header extends React.Component<Props, State> {
             <FormattedMessage id='Header.longDesc' />
           </div>
           <div className='Header__content__routes'>
-            {[
-              ...routes.slice(1, 3),
-              { to: 'http://apollonia.today/ar', id: 'AR' },
-              ...routes.slice(3)
-            ]
-              .map(route =>
+            {this.getTypes()
+              .map((type: ProjType) =>
                 <Link
                   onClick={() => this.closeAll()}
-                  to={route.to}
+                  to={type.url}
                   className='Header__content__routes__item'
                 >
-                  <FormattedMessage id={`pages.${route.id || camelize(route.to.replace('/', ''))}.name`} />
+                  {type.name}
                 </Link>
             )}
             <div className='Header__content__routes__buttons'>
