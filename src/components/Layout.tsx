@@ -11,6 +11,7 @@ import {
   ProjType,
   Project
 } from './Store/Types'
+import ImgViewer from "./ImgViewer"
 
 type PathParamsType = {
   param1: string,
@@ -50,27 +51,29 @@ class Layout extends React.Component<Props, State> {
         <div className='Layout__preview__text'>
           {currentItem.desc}
         </div>
-        {/* <Img
-          className='Layout__preview__Img'
-          src={currentItem}
-        /> */}
+        <ImgViewer
+          images={currentItem.images || []}
+        />
       </>
   }
 
   render = () =>
     <div className='Layout'>
       <div className='Layout__links'>
-        {this.props.items
-          .map((item: Project) =>
-            <NavLink
-              key={item.url}
-              to={`/${this.props.projType.url}/${item.url}`}
-              className='Layout__links__item'
-              activeClassName='Layout__links__item--active'
-            >
-              {item.name}
-            </NavLink>
-        )}
+        <div className='Layout__links__container'>
+          {this.props.items
+            .sort((a: Project, b: Project) => (a.order || 100) - (b.order || 100))
+            .map((item: Project) =>
+              <NavLink
+                key={item.url}
+                to={`/${this.props.projType.url}/${item.url}`}
+                className='Layout__links__item'
+                activeClassName='Layout__links__item--active'
+              >
+                {item.name}
+              </NavLink>
+          )}
+        </div>
       </div>
       <div className='Layout__preview'>
         {this.state.current !== '' ?

@@ -6,6 +6,8 @@ import ResizeObserver from 'resize-observer-polyfill'
 type Props = {
   src: string
   className?: string
+  alt?: string
+  onClick?: Function
 }
 
 type State = {
@@ -42,10 +44,11 @@ class Img extends React.Component<Props, State> {
         ${this.props.className}
         ${typeof this.state.portrait === "undefined" && "Img--hidden"}
       `}
+      onClick={() => this.props?.onClick?.()}
     >
       <img
         ref={this.imgRef}
-        alt=""
+        alt={this.props.alt || ''}
         src={this.props.src}
         className={`Img__img Img__img--${this.state.portrait ? "portrait" : "landscape"}`}
         onLoad={this.setOrientation}

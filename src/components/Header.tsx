@@ -99,7 +99,9 @@ class Header extends React.Component<Props, State> {
         </div>}
 
       <div className='Header__content'>
-        <Frame>
+        <Frame
+          className='Frame--Header'
+        >
           <div className='Header__content__long-desc'>
             <FormattedMessage id='Header.longDesc' />
           </div>
