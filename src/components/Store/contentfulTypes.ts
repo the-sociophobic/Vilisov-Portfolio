@@ -5,7 +5,6 @@ interface ContentfulItem {
   name: string
   desc: JSX.Element
   url: string
-  order: number
 }
 
 interface File extends ContentfulItem {

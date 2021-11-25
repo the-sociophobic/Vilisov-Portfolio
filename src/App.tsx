@@ -6,7 +6,7 @@ import {
   Provider,
   Context
 } from './components/Store'
-import Routes from './components/Routes'
+import Home from './pages/Home'
 
 import './styles/index.sass'
 import Loader from './components/Loader'
@@ -22,7 +22,7 @@ class App extends React.Component {
         <Router>
           <Helmet />
           <Loader loaded={this?.context?.contentful ? true : false} />
-          <Routes />
+          <Home />
         </Router>
       </div>
     </Provider>

@@ -1,6 +1,11 @@
 import React from 'react'
 
-import { withRouter } from 'react-router-dom'
+import {
+  withRouter,
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
 
 import Link from "./Link"
@@ -8,8 +13,7 @@ import Frame from "./Frame"
 import { Context } from './Store'
 import FormattedMessage from './FormattedMessage'
 import { ProjType } from './Store/Types'
-
-import camelize from '../utils/camelize'
+import Layout from '../components/Layout'
 
 
 type PathParamsType = {
@@ -19,14 +23,12 @@ type PathParamsType = {
 type Props = RouteComponentProps<PathParamsType> & {}
 
 type State = {
-  opened: boolean;
-  linksOpened: boolean;
+  linksOpened: boolean
 }
 
 
 class Header extends React.Component<Props, State> {
   state = {
-    opened: true,
     linksOpened: false,
   }
 
@@ -44,11 +46,40 @@ class Header extends React.Component<Props, State> {
 
   getTypes = () =>
     this.context?.contentful?.types
-      ?.sort((a: ProjType, b:ProjType) => (a.order || 100) - (b.order || 100))
+      // ?.sort((a: ProjType, b:ProjType) => (a.order || 100) - (b.order || 100))
     || []
 
+  renderHomeMenu = () =>
+    <>
+      <div className='Header__content__long-desc'>
+        <FormattedMessage id='Header.longDesc' />
+      </div>
+      <div className='Header__content__links'>
+        <div className='Header__content__links__routes'>
+          {this.getTypes()
+            .map((type: ProjType) =>
+              <Link
+                onClick={() => this.closeAll()}
+                to={type.url}
+                className='Header__content__links__routes__item'
+              >
+                {type.name}
+              </Link>
+          )}
+        </div>
+        <div className='Header__content__links__buttons'>
+          <button className={'Header__content__links__buttons__item Header__content__links__buttons__item--left'}>
+            <FormattedMessage id='Header.whatAmIButton' />
+          </button>
+          <button className={'Header__content__links__buttons__item Header__content__links__buttons__item--right'}>
+            <FormattedMessage id='Header.helpButton' />
+          </button>
+        </div>
+      </div>
+    </>
+
   render = () =>
-    <header className={`Header ${this.state.opened && "Header--opened"}`}>
+    <header className={`Header ${this.context.opened && "Header--opened"}`}>
 
       <div className="Header__buttons">
         
@@ -56,13 +87,17 @@ class Header extends React.Component<Props, State> {
           className="Header__buttons__links"
           onClick={() => this.setState({ linksOpened: !this.state.linksOpened })}
         />
-        {/* <div className="Header__buttons__locale">
-          <FormattedMessage id="Header.buttons.locale" />
-        </div> */}
-        {/* <div
+        <div className="Header__buttons__locale">
+          {/* <FormattedMessage id="Header.buttons.locale" /> */}
+          en
+        </div>
+        <div
           className="Header__buttons__open"
-          onClick={() => this.setState({ opened: !this.state.opened })}
-        /> */}
+          onClick={() => {
+            this.context.setState({ opened: !this.context.opened })
+            this.props.location.pathname !== '/' && this.props.history.push('/')
+          }}
+        />
       </div>
 
       {this.state.linksOpened &&
@@ -102,29 +137,20 @@ class Header extends React.Component<Props, State> {
         <Frame
           className='Frame--Header'
         >
-          <div className='Header__content__long-desc'>
-            <FormattedMessage id='Header.longDesc' />
-          </div>
-          <div className='Header__content__routes'>
-            {this.getTypes()
-              .map((type: ProjType) =>
-                <Link
-                  onClick={() => this.closeAll()}
-                  to={type.url}
-                  className='Header__content__routes__item'
-                >
-                  {type.name}
-                </Link>
-            )}
-            <div className='Header__content__routes__buttons'>
-              {/* <button className={'Header__content__routes__buttons'}>
-                <FormattedMessage id='Header.whatAmIButton' />
-              </button>
-              <button className={'Header__content__routes__buttons'}>
-                <FormattedMessage id='Header.helpButton' />
-              </button> */}
-            </div>
-          </div>
+          <Switch>
+            <Route
+              path='/'
+              exact
+            >
+              {this.renderHomeMenu()}
+            </Route>
+            {this?.context?.contentful?.types
+              ?.map((projType: ProjType) =>
+                <Route path={`/${projType.url}`}>
+                  <Layout projType={projType} />
+                </Route>
+              )}
+          </Switch>
         </Frame>       
       </div>
       

@@ -26,9 +26,12 @@ class Loader extends React.Component<Props, State> {
     }
   }
   
-  static getDerivedStateFromProps = (props: Props, state: State) =>
+  static getDerivedStateFromProps = (props: Props, state: State) => {
     (!state.transparent && props.loaded) &&
       state.hide()
+      
+    return null
+  }
 
   render = () =>
     this.state.hidden ?

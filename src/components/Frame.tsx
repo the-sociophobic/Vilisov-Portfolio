@@ -3,6 +3,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { RouteComponentProps } from 'react-router'
 
+import Context from './Store/Context'
 import FormattedMessage from './FormattedMessage'
 import Link from './Link'
 import Img from './Img'
@@ -20,13 +21,19 @@ type Props = RouteComponentProps<PathParamsType> & {
 
 
 class Frame extends React.Component<Props, {}> {
+  
+  static contextType = Context
+
   render = () =>
     <div className={`Frame ${this.props.className}`}>
       <div className='Frame__content'>
         {this.props.children}
       </div>
       <div className="Frame__navigation">
-        <Link to='/'>
+        <Link
+          to='/'
+          onClick={() => this.context.setState({ opened: false })}
+        >
           <FormattedMessage id="Vilisov" />
         </Link>
         <div className="Frame__navigation__arrow" />

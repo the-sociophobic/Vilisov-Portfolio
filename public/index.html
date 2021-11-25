@@ -55,4 +55,14 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script src="https://unpkg.com/rive-js"></script>
+  <script>
+    setTimeout(() => {
+      new rive.Rive({
+          src: '%PUBLIC_URL%/vilisov.riv',
+          canvas: document.getElementById('vilisov-char'),
+          autoplay: true
+      })
+    }, 1000)
+</script>
 </html>

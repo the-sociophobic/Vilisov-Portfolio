@@ -10,16 +10,19 @@ interface ProjType extends ContentfulItem {
 
 interface Project extends ContentfulItem {
   images: File[]
+  externalLink: string
 }
 
 
 type StateType = {
+  opened: boolean
   locale: string
   contentfulData: any[]
   contentful: any
 }
 
 const initialState = {
+  opened: false,
   locale: "rus",
   contentfulData: [],
   contentful: {},

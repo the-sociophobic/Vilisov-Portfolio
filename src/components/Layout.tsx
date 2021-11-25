@@ -7,11 +7,14 @@ import {
 import { RouteComponentProps } from 'react-router'
 
 
+import { Context } from './Store'
 import {
   ProjType,
   Project
 } from './Store/Types'
 import ImgViewer from "./ImgViewer"
+import Link from './Link'
+
 
 type PathParamsType = {
   param1: string,
@@ -19,7 +22,6 @@ type PathParamsType = {
 
 interface MyProps extends Object {
   projType: ProjType
-  items: Project[]
 }
 
 type Props = RouteComponentProps<PathParamsType> & MyProps
@@ -31,19 +33,28 @@ type State = {
 
 class Layout extends React.Component<Props, State> {
 
+  static contextType = Context
+
   state = {
-    current: this.props.location.pathname.replace(this.props.projType.url, '').replace(/\//g, '')
+    current: this.props.location.pathname
+      .replace(this.props.projType.url, '')
+      .replace(/\//g, '')
   }
+
+  componentDidMount = () =>
+    this.context.setState({ opened: true })
 
   componentDidUpdate = (prevProps: { location: Object }) =>
     this.props.location !== prevProps.location &&
       this.setState({
-        current: this.props.location.pathname.replace(this.props.projType.url, '').replace(/\//g, '')
+        current: this.props.location.pathname
+          .replace(this.props.projType.url, '')
+          .replace(/\//g, '')
       })
 
   renderCurrent = () => {
-    const currentItem = this.props.items
-      .find((item: Project) =>
+    const currentItem = this.props.projType?.projects
+      ?.find((item: Project) =>
         item.url === this.state.current)
 
     return !currentItem ? '' :
@@ -54,6 +65,11 @@ class Layout extends React.Component<Props, State> {
         <ImgViewer
           images={currentItem.images || []}
         />
+        {currentItem.externalLink &&
+          <Link to={currentItem.externalLink}>
+            🔗
+          </Link>
+        }
       </>
   }
 
@@ -61,9 +77,9 @@ class Layout extends React.Component<Props, State> {
     <div className='Layout'>
       <div className='Layout__links'>
         <div className='Layout__links__container'>
-          {this.props.items
-            .sort((a: Project, b: Project) => (a.order || 100) - (b.order || 100))
-            .map((item: Project) =>
+          {this.props.projType?.projects
+            // .sort((a: Project, b: Project) => (a.order || 100) - (b.order || 100))
+            ?.map((item: Project) =>
               <NavLink
                 key={item.url}
                 to={`/${this.props.projType.url}/${item.url}`}
