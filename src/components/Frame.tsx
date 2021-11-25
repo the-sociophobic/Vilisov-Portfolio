@@ -27,7 +27,9 @@ class Frame extends React.Component<Props, {}> {
   render = () =>
     <div className={`Frame ${this.props.className}`}>
       <div className='Frame__content'>
-        {this.props.children}
+        <div className='Frame__content__scrollable'>
+          {this.props.children}
+        </div>
       </div>
       <div className="Frame__navigation">
         <Link

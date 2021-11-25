@@ -109,6 +109,9 @@ $border: 1px solid $dark
   box-sizing: border-box
   -webkit-font-smoothing: antialiased
 
+p
+  @include media-breakpoint-down(sm)
+   font-size: 12px
 
 
 .grain
@@ -248,20 +251,25 @@ $border: 1px solid $dark
       width: 100vw
       height: 100vh
     &__long-desc
-      @extend .align-self-lg-end
-      width: calc(780 / 1440 * 100%)
-      margin-right: calc(74 / 1440 * 100%)
+      @extend .d-flex
+      @extend .flex-column
+      width: 100%
+      padding-right: calc(74 / 1440 * 100%)
       margin-top: rem(120)
-      margin-bottom: rem(80)
-      // margin-bottom: rem(139)
-      font-size: rem(36)
+      padding-bottom: rem(80)
       @include media-breakpoint-down(md)
-        width: 85%
-        padding-top: 0
         font-size: rem(30)
       @include media-breakpoint-down(xs)
-        top: rem(100)
         font-size: rem(20)
+      &__content
+        @extend .align-self-lg-end
+        width: calc(780 / 1440 * 100%)
+        font-size: rem(36)
+        @include media-breakpoint-down(md)
+          width: 100%
+          font-size: rem(30)
+        @include media-breakpoint-down(xs)
+          font-size: rem(20)
     &__links
       @extend .d-flex
       @extend .flex-column
@@ -451,12 +459,20 @@ $border: 1px solid $dark
   &__content
     *
       color: $light
-    @extend .flex-grow-1
     position: relative
     width: 100%
-    overflow-y: scroll
+    height: calc(100% - 80px)
+    @include media-breakpoint-down(md)
+      height: calc(100% - 70px)
+    @include media-breakpoint-down(sm)
+      height: calc(100% - 40px)
     background-color: $dark
     border-radius: rem(15)
+    &__scrollable
+      @extend .flex-grow-1
+      width: 100%
+      height: 100%
+      overflow-y: scroll
   &__navigation
     width: 100%
     height: rem(82)
@@ -498,6 +514,7 @@ $border: 1px solid $dark
       @extend .justify-content-between
       @include media-breakpoint-down(md)
         padding: 14px
+        padding-top: 60px
   &--Loader
     position: fixed
     top: 0
@@ -536,20 +553,25 @@ $border: 1px solid $dark
 
 
 .Layout
-  @extend .d-flex
-  @extend .flex-column
-  @extend .flex-lg-row
-  @extend .align-items-center
-  @extend .justify-content-around
   width: 100%
   height: 100%
+  @include media-breakpoint-down(md)
+    height: default
+  &__container
+    @include media-breakpoint-up(md)
+      width: 100%
+      height: 100%
+    @extend .d-flex
+    @extend .flex-column
+    @extend .flex-lg-row
+    @extend .align-items-center
+    @extend .justify-content-around
   &__preview,
   &__links
     width: 40%
     height: 100%
     @include media-breakpoint-down(md)
-      width: 90%
-      height: 30%
+      width: 100%
   &__preview
     @extend .order-lg-1
     @extend .d-flex
@@ -559,7 +581,7 @@ $border: 1px solid $dark
     padding-bottom: rem(50)
     @include media-breakpoint-down(md)
       padding-top: rem(20)
-      padding-bottom: rem(80)
+      padding-bottom: 0
     &__text
       color: $light
       font-size: rem(13)
@@ -569,9 +591,16 @@ $border: 1px solid $dark
     &__Img
       width: 100%
   &__links
+    min-height: 10vh
     @extend .order-lg-2
     position: relative
     overflow: hidden
+    &--hide-inactive
+      overflow: visible
+      @extend .d-flex
+      @include media-breakpoint-down(md)
+        &::after
+          display: none
     &::after
       content: ''
       position: absolute
@@ -579,18 +608,25 @@ $border: 1px solid $dark
       width: 100%
       height: rem(150)
       @include media-breakpoint-down(md)
-        height: rem(100)
+        height: rem(50)
       bottom: 0
       right: 0
       background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%)
     &__container
       @extend .no-scrollbar
       width: 100%
-      height: 100%
+      &:not(.Layout__links--hide-inactive &)
+        height: 100%
+        max-height: 40vh
       overflow-x: visible
       overflow-y: scroll
       padding-top: rem(80)
       padding-bottom: rem(80)
+      @include media-breakpoint-down(md)
+        padding-top: 0
+        padding-bottom: 0
+        .Layout__links--hide-inactive &
+          overflow-y: visible
     &__item
       font-family: 'RF Dewi Extended', sans-serif
       font-weight: 900
@@ -598,20 +634,33 @@ $border: 1px solid $dark
       color: $light
       font-size: rem(45)
       margin-bottom: rem(45)
+      &:last-of-type:not(.Layout__links--hide-inactive &)
+        margin-bottom: rem(145)
       display: block
       &:hover
         text-decoration: none
       @include media-breakpoint-down(md)
         font-size: rem(36)
+        margin-bottom: rem(36)
+        &:last-of-type:not(.Layout__links--hide-inactive &)
+          margin-bottom: rem(136)
+        .Layout__links--hide-inactive &
+          margin-top: 20px
       @include media-breakpoint-down(xs)
         font-size: rem(20)
+        margin-bottom: rem(20)
+        &:last-of-type:not(.Layout__links--hide-inactive &)
+          margin-bottom: rem(120)
       &:hover,
       &--active
         color: $dark !important
         *
           color: $dark !important
         text-shadow: -1px -1px 0 $light, 1px -1px 0 $light, -1px 1px 0 $light, 1px 1px 0 $light
-
+      @include media-breakpoint-down(md)
+        .Layout__links--hide-inactive &:not(&--active)
+          display: none
+          
 
 
 .ImgViewer

@@ -52,7 +52,9 @@ class Header extends React.Component<Props, State> {
   renderHomeMenu = () =>
     <>
       <div className='Header__content__long-desc'>
-        <FormattedMessage id='Header.longDesc' />
+        <div className='Header__content__long-desc__content'>
+          <FormattedMessage id='Header.longDesc' />
+        </div>
       </div>
       <div className='Header__content__links'>
         <div className='Header__content__links__routes'>

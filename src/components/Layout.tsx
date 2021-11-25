@@ -75,28 +75,35 @@ class Layout extends React.Component<Props, State> {
 
   render = () =>
     <div className='Layout'>
-      <div className='Layout__links'>
-        <div className='Layout__links__container'>
-          {this.props.projType?.projects
-            // .sort((a: Project, b: Project) => (a.order || 100) - (b.order || 100))
-            ?.map((item: Project) =>
-              <NavLink
-                key={item.url}
-                to={`/${this.props.projType.url}/${item.url}`}
-                className='Layout__links__item'
-                activeClassName='Layout__links__item--active'
-              >
-                {item.name}
-              </NavLink>
-          )}
+      <div className='Layout__container'>
+        <div className={`Layout__links ${
+          this.props.projType?.projects
+            ?.some((item: Project) =>
+              this.props.location.pathname.includes(item.url))
+          && 'Layout__links--hide-inactive'
+        }`}>
+          <div className='Layout__links__container'>
+            {this.props.projType?.projects
+              // .sort((a: Project, b: Project) => (a.order || 100) - (b.order || 100))
+              ?.map((item: Project) =>
+                <NavLink
+                  key={item.url}
+                  to={`/${this.props.projType.url}/${this.props.location.pathname.includes(item.url) ? '' : item.url}`}
+                  className='Layout__links__item'
+                  activeClassName='Layout__links__item--active'
+                >
+                  {item.name}
+                </NavLink>
+            )}
+          </div>
         </div>
-      </div>
-      <div className='Layout__preview'>
-        {this.state.current !== '' ?
-          this.renderCurrent()
-          :
-          this.props.projType.desc
-        }
+        <div className='Layout__preview'>
+          {this.state.current !== '' ?
+            this.renderCurrent()
+            :
+            this.props.projType.desc
+          }
+        </div>
       </div>
     </div>
 }
