@@ -89,9 +89,13 @@ class Header extends React.Component<Props, State> {
           className="Header__buttons__links"
           onClick={() => this.setState({ linksOpened: !this.state.linksOpened })}
         />
-        <div className="Header__buttons__locale">
-          {/* <FormattedMessage id="Header.buttons.locale" /> */}
-          en
+        <div
+          className="Header__buttons__locale"
+          onClick={() => this.context.setState({
+            locale: this.context.locale === 'ru' ? 'en' : 'ru'
+          })}
+        >
+          {this.context.locale}
         </div>
         <div
           className="Header__buttons__open"

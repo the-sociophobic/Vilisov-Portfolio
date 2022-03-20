@@ -16,14 +16,14 @@ interface Project extends ContentfulItem {
 
 type StateType = {
   opened: boolean
-  locale: string
+  locale: 'ru' | 'en'
   contentfulData: any[]
   contentful: any
 }
 
-const initialState = {
+const initialState: StateType = {
   opened: false,
-  locale: "rus",
+  locale: 'ru',
   contentfulData: [],
   contentful: {},
 }

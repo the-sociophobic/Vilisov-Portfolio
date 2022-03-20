@@ -29,26 +29,26 @@ class Provider extends React.Component<{}, StateType> {
     this.setState({
       contentfulData: [
         await getContentfulItems(this.contentfulClient),
-        await getContentfulItems(this.contentfulClient, {locale: 'en-US'})
+        await getContentfulItems(this.contentfulClient, { locale: 'en-US' })
       ]
     })
 
-    console.log(this.state.contentfulData[0])
+    console.log(this.state.contentfulData)
   }
   
   stateAndSetters = () => ({
     ...this.state,
     setState: (obj: any) =>
       this.setState(obj),
-    setLocale: (_locale: string) =>
+    setLocale: (_locale: 'ru' | 'en') =>
       this.setState({
         locale: _locale
       }),
     toggleLocale: () =>
       this.setState({
-        locale: this.state.locale === "rus" ? "eng" : "rus"
+        locale: this.state.locale === 'ru' ? 'en' : 'ru'
       }),
-    contentful: this.state.contentfulData?.[this.state.locale === "rus" ? 0 : 1],
+    contentful: this.state.contentfulData?.[this.state.locale === 'ru' ? 0 : 1],
   })
 
   render = () =>

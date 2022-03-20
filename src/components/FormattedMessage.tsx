@@ -29,7 +29,7 @@ class FormattedMessage extends
           addNewLines(
             getMessage(this, this.props.id))}
         {this.props?.message?.
-          [this.context.locale === 'rus' ? 0 : 1]}
+          [this.context.locale === 'ru' ? 0 : 1]}
       </div>
   }
   

@@ -1,5 +1,5 @@
 const defaultMessages = {
-  Vilisov: ["Вилисов", ""],
+  Vilisov: ["Вилисов", "Vilisov"],
 
   Loading: ['загружаемся...', 'loading...'],
 

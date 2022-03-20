@@ -9,14 +9,14 @@ interface messagesType {
 
 const arrayToLocale = (obj: object): messagesType => {
   var result = {
-    rus: {},
-    eng: {}
+    ru: {},
+    en: {}
   }
 
   _.transform(obj,
     (res, value, key) => {
-      res.rus[key] = value[0]
-      res.eng[key] = value[1]
+      res.ru[key] = value[0]
+      res.en[key] = value[1]
     }, result)
 
   return result

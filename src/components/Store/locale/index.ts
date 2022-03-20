@@ -10,7 +10,7 @@ const messages = arrayToLocale(flatten(defaultMessages))
 type objWithContextType = {
   context: {
     messages: any,
-    locale: string
+    locale: 'ru' | 'en'
   }
 }
 
@@ -32,8 +32,8 @@ const getMessageAllLocales = (
   id: string,
 ): (string | JSX.Element)[] =>
     [
-      messages["rus"][id] || "#no message found#",
-      messages["eng"][id] || "#no message found#"
+      messages['ru'][id] || "#no message found#",
+      messages['en'][id] || "#no message found#"
     ]
 
 
