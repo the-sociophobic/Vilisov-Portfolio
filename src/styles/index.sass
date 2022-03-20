@@ -245,13 +245,13 @@ p
     left: 0
     width: 0
     height: 0
-    border-bottom-right-radius: 555px
+    // border-bottom-right-radius: 555px
     overflow: hidden
-    transition: width $menu-transition, height $menu-transition
+    // transition: width $menu-transition, height $menu-transition
     .Header--opened &
       width: 100vw
       height: 100vh
-      border-bottom-right-radius: 0
+      // border-bottom-right-radius: 0
     &__long-desc
       @extend .d-flex
       @extend .flex-column
@@ -277,7 +277,7 @@ p
       @extend .flex-column
       width: calc(848 / 1440 * 100%)
       margin-left: rem(100)
-      margin-bottom: rem(86)
+      margin-bottom: rem(40)
       @include media-breakpoint-down(md)
         margin-bottom: rem(30)
         width: 100%
@@ -310,23 +310,19 @@ p
           border: 2px solid $main
           white-space: nowrap
           margin-bottom: rem(20)
-          *
-            // line-height: 4
-            @include media-breakpoint-down(xl)
-              line-height: 2.5
-              font-size: rem(16)
-            @include media-breakpoint-down(xs)
-              font-size: rem(12)
-          &--left
-            *
-              color: $dark !important
+          background-color: $dark
+          color: $light
+          @include media-breakpoint-down(xl)
+            line-height: 2.5
+            font-size: rem(16)
+          @include media-breakpoint-down(xs)
+            font-size: rem(12)
+          &:first-of-type
+            margin-right: rem(20)
+          &--current
+            color: $dark !important
             background-color: $main
             filter: drop-shadow(3px 3px 0 $light)
-            margin-right: rem(20)
-          &--right
-            *
-              color: $light
-            background-color: $dark
 
 
   
@@ -410,6 +406,9 @@ p
     @extend .order-1
     @extend .order-xl-2
     @include media-breakpoint-up(lg)
+      display: flex
+      flex-direction: column
+      justify-content: center
       transition: width $menu-transition
       width: 0
       height: 100%
@@ -472,6 +471,9 @@ p
     border-radius: rem(15)
     &__scrollable
       @extend .flex-grow-1
+      @extend .d-flex
+      @extend .flex-column
+      @extend .justify-content-between
       width: 100%
       height: 100%
       overflow-y: scroll
@@ -617,9 +619,12 @@ p
     &__container
       @extend .no-scrollbar
       width: 100%
-      &:not(.Layout__links--hide-inactive &)
+      @include media-breakpoint-up(md)
         height: 100%
-        max-height: 40vh
+      &:not(.Layout__links--hide-inactive &)
+        @include media-breakpoint-down(md)
+          height: 100%
+          max-height: 40vh
       overflow-x: visible
       overflow-y: scroll
       padding-top: rem(80)

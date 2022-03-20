@@ -24,12 +24,14 @@ type Props = RouteComponentProps<PathParamsType> & {}
 
 type State = {
   linksOpened: boolean
+  currentButton: 1 | 2
 }
 
 
 class Header extends React.Component<Props, State> {
-  state = {
+  state: State = {
     linksOpened: false,
+    currentButton: 1
   }
 
   static contextType = Context
@@ -45,7 +47,7 @@ class Header extends React.Component<Props, State> {
       this.closeAll()
 
   getTypes = () =>
-    this.context?.contentful?.types
+    this.context?.contentful?.mainPages?.[0]?.types
       // ?.sort((a: ProjType, b:ProjType) => (a.order || 100) - (b.order || 100))
     || []
 
@@ -53,7 +55,7 @@ class Header extends React.Component<Props, State> {
     <>
       <div className='Header__content__long-desc'>
         <div className='Header__content__long-desc__content'>
-          <FormattedMessage id='Header.longDesc' />
+          {this.context?.contentful?.mainPages?.[0]?.[`title${this.state.currentButton}`]}
         </div>
       </div>
       <div className='Header__content__links'>
@@ -61,6 +63,7 @@ class Header extends React.Component<Props, State> {
           {this.getTypes()
             .map((type: ProjType) =>
               <Link
+                key={type.url}
                 onClick={() => this.closeAll()}
                 to={type.url}
                 className='Header__content__links__routes__item'
@@ -70,11 +73,23 @@ class Header extends React.Component<Props, State> {
           )}
         </div>
         <div className='Header__content__links__buttons'>
-          <button className={'Header__content__links__buttons__item Header__content__links__buttons__item--left'}>
-            <FormattedMessage id='Header.whatAmIButton' />
+          <button
+            className={`
+              Header__content__links__buttons__item
+              ${this.state.currentButton === 1 && 'Header__content__links__buttons__item--current'}
+            `}
+            onClick={() => this.setState({ currentButton: 1 })}
+          >
+            {this.context?.contentful?.mainPages?.[0]?.button1}
           </button>
-          <button className={'Header__content__links__buttons__item Header__content__links__buttons__item--right'}>
-            <FormattedMessage id='Header.helpButton' />
+          <button
+            className={`
+              Header__content__links__buttons__item
+              ${this.state.currentButton === 2 && 'Header__content__links__buttons__item--current'}
+            `}
+            onClick={() => this.setState({ currentButton: 2 })}
+          >
+            {this.context?.contentful?.mainPages?.[0]?.button2}
           </button>
         </div>
       </div>
@@ -85,10 +100,10 @@ class Header extends React.Component<Props, State> {
 
       <div className="Header__buttons">
         
-        <div
+        {/* <div
           className="Header__buttons__links"
           onClick={() => this.setState({ linksOpened: !this.state.linksOpened })}
-        />
+        /> */}
         <div
           className="Header__buttons__locale"
           onClick={() => this.context.setState({
@@ -131,6 +146,7 @@ class Header extends React.Component<Props, State> {
             },
           ].map(link =>
             <Link
+              key={link.to}
               to={link.to}
               className='Header__links__item'
             >
@@ -152,7 +168,10 @@ class Header extends React.Component<Props, State> {
             </Route>
             {this?.context?.contentful?.types
               ?.map((projType: ProjType) =>
-                <Route path={`/${projType.url}`}>
+                <Route
+                  key={projType.url}
+                  path={`/${projType.url}`}
+                >
                   <Layout projType={projType} />
                 </Route>
               )}

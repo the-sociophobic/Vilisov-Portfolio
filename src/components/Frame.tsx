@@ -34,7 +34,7 @@ class Frame extends React.Component<Props, {}> {
       <div className="Frame__navigation">
         <Link
           to='/'
-          onClick={() => this.context.setState({ opened: false })}
+          // onClick={() => this.context.setState({ opened: false })}
         >
           <FormattedMessage id="Vilisov" />
         </Link>

@@ -2,8 +2,8 @@ import React from "react"
 
 import Emoji from "../components/Emoji"
 import Header from '../components/Header'
-import FormattedMessage from "../components/FormattedMessage"
 import isTouchDevice from "../utils/isTouchDevice"
+import { Context } from '../components/Store'
 
 
 type State = {
@@ -21,17 +21,19 @@ class Home extends React.Component<{}, State> {
     alphaY: 0,
   }
 
-  componentDidMount = () =>
-    isTouchDevice() ?
-      window.addEventListener("scroll", e => this.setState({
-        alphaX: window.scrollY / window.innerHeight - .5,
-        alphaY: window.scrollY / window.innerHeight - .5,
-      }))
-      :
-      window.addEventListener("mousemove", e => this.setState({
-        alphaX: .5 - e.clientX / window.innerWidth,
-        alphaY: .5 - e.clientY / window.innerHeight,
-      }))
+  static contextType = Context
+
+  // componentDidMount = () =>
+  //   isTouchDevice() ?
+  //     window.addEventListener("scroll", e => this.setState({
+  //       alphaX: window.scrollY / window.innerHeight - .5,
+  //       alphaY: window.scrollY / window.innerHeight - .5,
+  //     }))
+  //     :
+  //     window.addEventListener("mousemove", e => this.setState({
+  //       alphaX: .5 - e.clientX / window.innerWidth,
+  //       alphaY: .5 - e.clientY / window.innerHeight,
+  //     }))
 
 
   longLongDescRef: any = React.createRef()
@@ -84,7 +86,7 @@ class Home extends React.Component<{}, State> {
           ref={this.longLongDescRef}
           className="Home__long-long-desc__container"
         >
-          <FormattedMessage id='Home.longLongDesc' />
+          {this.context?.contentful?.mainPages?.[0]?.desc}
         </div>
       </div>
 
