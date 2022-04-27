@@ -261,6 +261,8 @@ p
       padding-bottom: rem(80)
       @include media-breakpoint-down(md)
         font-size: rem(30)
+        margin-top: rem(30)
+        padding-bottom: rem(30)
       @include media-breakpoint-down(xs)
         font-size: rem(20)
       &__content
@@ -402,7 +404,7 @@ p
     &__desc
       bottom: 15%
   &__long-long-desc
-    overflow: hidden
+    overflow-y: scroll
     @extend .order-1
     @extend .order-xl-2
     @include media-breakpoint-up(lg)
@@ -418,27 +420,30 @@ p
       height: 0
     .Home--opened &
       @include media-breakpoint-up(xl)
-        width: 25vw
+        width: 350px
       @include media-breakpoint-down(lg)
         height: 30vh
       @include media-breakpoint-down(md)
         height: 35vh
     &__container
-      color: $light
+      *
+        color: $light
+      word-break: break-word
       @include media-breakpoint-up(xl)
-        font-size: rem(15)
-        padding: 35% rem(40)
-        width: 25vw
+        *
+          font-size: rem(15)
+        padding: rem(90) rem(40)
       @include media-breakpoint-down(lg)
-        font-size: rem(15)
+        *
+          font-size: rem(15)
         padding: rem(90) rem(60)
-        height: 30vh
       @include media-breakpoint-down(md)
-        font-size: rem(12)
+        *
+          font-size: rem(12)
         padding: rem(80) rem(40) rem(45)
-        height: 35vh
       @include media-breakpoint-down(sm)
-        font-size: rem(10)
+        *
+          font-size: rem(10)
         padding: rem(80) rem(23) rem(33)
 
 
@@ -570,17 +575,20 @@ p
     @extend .flex-lg-row
     @extend .align-items-center
     @extend .justify-content-around
+    @extend .justify-content-lg-start
   &__preview,
   &__links
-    width: 40%
     height: 100%
     @include media-breakpoint-down(md)
-      width: 100%
+      width: 100% !important
   &__preview
+    width: 50%
+    @include media-breakpoint-up(lg)
+      margin-right: 5%
     @extend .order-lg-1
     @extend .d-flex
     @extend .flex-column
-    @extend .justify-content-between
+    @extend .justify-content-start
     padding-top: rem(180)
     padding-bottom: rem(50)
     @include media-breakpoint-down(md)
@@ -590,19 +598,29 @@ p
       color: $light
       font-size: rem(13)
       line-height: 1.4
+      margin-bottom: rem(30)
+      max-height: 50%
+      @include media-breakpoint-up(lg)
+        padding-left: 5%
       @include media-breakpoint-down(md)
-        width: 70%
+        width: 100%
+        *
+          font-size: rem(12)
     &__Img
       width: 100%
   &__links
+    width: 40%
     min-height: 10vh
     @extend .order-lg-2
     position: relative
     overflow: hidden
+    @include media-breakpoint-down(md)
+      padding-left: .15rem
     &--hide-inactive
       overflow: visible
       @extend .d-flex
       @include media-breakpoint-down(md)
+        height: auto
         &::after
           display: none
     &::after
@@ -672,20 +690,19 @@ p
 
 .ImgViewer
   width: 100%
-  height: 35%
-  min-height: rem(150)
   overflow-x: scroll
+  @extend .flex-grow-1
   &__container
     height: 100%
     @extend .d-flex
     @extend .flex-row
   &__Img
-    height: 100%
-    width: rem(200)
+    width: 85%
     margin-right: rem(30)
-    overflow: hidden
     cursor: pointer
     .Img__img
+      width: 100%
+      height: auto
   &__preview
     position: absolute
     top: 0

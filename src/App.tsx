@@ -1,5 +1,6 @@
 import React from 'react'
-import { BrowserRouter as Router } from "react-router-dom"
+import { BrowserRouter as Router } from 'react-router-dom'
+import Div100vh from 'react-div-100vh'
 
 import Helmet from './components/Helmet'
 import {
@@ -18,13 +19,15 @@ class App extends React.Component {
 
   render = () =>
     <Provider>
-      <div className="App">
-        <Router>
-          <Helmet />
-          <Loader loaded={this?.context?.contentful ? true : false} />
-          <Home />
-        </Router>
-      </div>
+      <Div100vh>
+        <div className="App">
+          <Router>
+            <Helmet />
+            <Loader loaded={this?.context?.contentful ? true : false} />
+            <Home />
+          </Router>
+        </div>
+      </Div100vh>
     </Provider>
 }
 
