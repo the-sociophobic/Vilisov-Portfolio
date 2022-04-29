@@ -14,6 +14,7 @@ import { Context } from './Store'
 import FormattedMessage from './FormattedMessage'
 import { ProjType } from './Store/Types'
 import Layout from '../components/Layout'
+import Img from '../components/Img'
 
 
 type PathParamsType = {
@@ -48,52 +49,66 @@ class Header extends React.Component<Props, State> {
 
   getTypes = () =>
     this.context?.contentful?.mainPages?.[0]?.types
-      // ?.sort((a: ProjType, b:ProjType) => (a.order || 100) - (b.order || 100))
+    // ?.sort((a: ProjType, b:ProjType) => (a.order || 100) - (b.order || 100))
     || []
 
-  renderHomeMenu = () =>
-    <>
-      <div className='Header__content__long-desc'>
-        <div className='Header__content__long-desc__content'>
-          {this.context?.contentful?.mainPages?.[0]?.[`title${this.state.currentButton}`]}
+  renderHomeMenu = () => {
+    const mainPage = this.context?.contentful?.mainPages?.[0]
+
+    return (
+      <>
+        <div className='Header__content__long-desc'>
+          <div className={`
+            Header__content__long-desc__avatar
+            ${this.context.showAvatar && 'Header__content__long-desc__avatar--visible'}
+          `}>
+            <Img
+              className='w-100 h-auto'
+              src={mainPage?.avatar?.file?.url}
+            />
+          </div>
+          <div className='Header__content__long-desc__content'>
+            {mainPage?.[`title${this.state.currentButton}`]}
+          </div>
         </div>
-      </div>
-      <div className='Header__content__links'>
-        <div className='Header__content__links__routes'>
-          {this.getTypes()
-            .map((type: ProjType) =>
-              <Link
-                key={type.url}
-                onClick={() => this.closeAll()}
-                to={type.url}
-                className='Header__content__links__routes__item'
-              >
-                {type.name}
-              </Link>
-          )}
+        <div className='Header__content__links'>
+          <div className='Header__content__links__routes'>
+            {this.getTypes()
+              .map((type: ProjType) =>
+                <Link
+                  key={type.url}
+                  onClick={() => this.closeAll()}
+                  to={type.url}
+                  className='Header__content__links__routes__item'
+                >
+                  {type.name}
+                </Link>
+            )}
+          </div>
+          <div className='Header__content__links__buttons'>
+            <button
+              className={`
+                Header__content__links__buttons__item
+                ${this.state.currentButton === 1 && 'Header__content__links__buttons__item--current'}
+              `}
+              onClick={() => this.setState({ currentButton: 1 })}
+            >
+              {mainPage?.button1}
+            </button>
+            <button
+              className={`
+                Header__content__links__buttons__item
+                ${this.state.currentButton === 2 && 'Header__content__links__buttons__item--current'}
+              `}
+              onClick={() => this.setState({ currentButton: 2 })}
+            >
+              {mainPage?.button2}
+            </button>
+          </div>
         </div>
-        <div className='Header__content__links__buttons'>
-          <button
-            className={`
-              Header__content__links__buttons__item
-              ${this.state.currentButton === 1 && 'Header__content__links__buttons__item--current'}
-            `}
-            onClick={() => this.setState({ currentButton: 1 })}
-          >
-            {this.context?.contentful?.mainPages?.[0]?.button1}
-          </button>
-          <button
-            className={`
-              Header__content__links__buttons__item
-              ${this.state.currentButton === 2 && 'Header__content__links__buttons__item--current'}
-            `}
-            onClick={() => this.setState({ currentButton: 2 })}
-          >
-            {this.context?.contentful?.mainPages?.[0]?.button2}
-          </button>
-        </div>
-      </div>
-    </>
+      </>
+    )
+  }
 
   render = () =>
     <header className={`Header ${this.context.opened && "Header--opened"}`}>

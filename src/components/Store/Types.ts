@@ -4,35 +4,48 @@ import {
 } from './contentfulTypes'
 
 
-interface ProjType extends ContentfulItem {
-  projects: Project[]
+export interface MainPage extends Omit<ContentfulItem, 'name'> {
+  title1: string
+  title2: string
+  button1: string
+  button2: string
+  types: ProjType[]
+  avatar: File
 }
 
-interface Project extends ContentfulItem {
+export interface ProjType extends ContentfulItem {
+  projects: Project[]
+  images?: File[]
+  externalLink?: string
+}
+
+export interface Project extends ContentfulItem {
   images: File[]
   externalLink: string
 }
 
+export type ContentfulData = {
+  mainPages: MainPage[]
+  types: ProjType[]
+  projects: Project[]
+}
 
-type StateType = {
+export type StateType = {
   opened: boolean
   locale: 'ru' | 'en'
-  contentfulData: any[]
-  contentful: any
+  showAvatar: boolean
+  contentfulData: ({} | ContentfulData)[]
+  contentful: {} | ContentfulData
 }
 
 const initialState: StateType = {
   opened: false,
   locale: 'ru',
+  showAvatar: false,
   contentfulData: [],
   contentful: {},
 }
 
-export type {
-  StateType,
-  ProjType,
-  Project
-}
 export {
   initialState,
 }
